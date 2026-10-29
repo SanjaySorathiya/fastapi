@@ -27,16 +27,16 @@ There are no tests and no test dependencies yet.
 
 ## 3. Code quality
 
-- [ ] **Money as `Decimal` or integer paise.** `float` is unsafe for currency; totals in a cart would show rounding errors.
-- [ ] **Single source of truth for item shape.** `MenuItemData` (TypedDict in `data.py`) duplicates `MenuItem` (Pydantic in `models.py`). Keep `MenuItem` and have `data.py` use it.
-- [ ] **Constrain `category`.** It is a free `str` in the model; use a `Literal` or `Enum`.
-- [ ] **Clean up `main.py`.**
+- [x] **Money as `Decimal` or integer paise.** `float` is unsafe for currency; totals in a cart would show rounding errors.
+- [x] **Single source of truth for item shape.** `MenuItemData` (TypedDict in `data.py`) duplicates `MenuItem` (Pydantic in `models.py`). Keep `MenuItem` and have `data.py` use it.
+- [x] **Constrain `category`.** It is a free `str` in the model; use a `Literal` or `Enum`.
+- [x] **Clean up `main.py`.**
   - Remove commented-out code (lines 25 and 29).
   - Fix the typo `cateory` in the comment at line 16.
   - Remove the stray comment-style leftovers.
-- [ ] **Consistent model building.** `get_menu` builds `MenuItem` objects, but `get_item` returns the raw dict. Use `MenuItem.model_validate` in both.
-- [ ] **Availability filter.** `available` is in the data but unused. Add `?available_only=true` (default `false`) so kiosks can hide sold-out items such as Vada Pav.
-- [ ] **Consistent error responses.** Use a custom exception handler, or keep `HTTPException` and make every error share one format.
+- [x] **Consistent model building.** `get_menu` builds `MenuItem` objects, but `get_item` returns the raw dict. Use `MenuItem.model_validate` in both.
+- [x] **Availability filter.** `available` is in the data but unused. Add `?available_only=true` (default `false`) so kiosks can hide sold-out items such as Vada Pav.
+- [x] **Consistent error responses.** Use a custom exception handler, or keep `HTTPException` and make every error share one format.
 
 ## 4. Operations
 
