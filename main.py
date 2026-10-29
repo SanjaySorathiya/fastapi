@@ -13,9 +13,6 @@ def root():
     return {"message": "Welcome to Barista Coffee Point Menu API"}
 
 
-# /menu -> path
-# /menu?cateory=coffee
-
 @app.get("/menu", response_model=MenuResponse)
 def get_menu(category: Literal["coffee", "snacks", "combos"] | None = Query(None, description="Filter by coffee, snacks or combos")):
     if category:
@@ -23,11 +20,9 @@ def get_menu(category: Literal["coffee", "snacks", "combos"] | None = Query(None
         if not filtered:
             raise HTTPException(status_code=404, detail=f"No item found in category: {category}")
         items = [MenuItem.model_validate(item) for item in filtered]
-        # return MenuResponse(count=len(filtered), items=filtered)
         return MenuResponse(count=len(items), items=items)
-        
+
     items = [MenuItem.model_validate(item) for item in menu_items]
-    #return MenuResponse(count=len(menu_items), items=list[MenuItemData])
     return MenuResponse(count=len(items), items=items)
 
 
@@ -36,5 +31,4 @@ def get_item(item_id: int):
     for item in menu_items:
         if item["id"] == item_id:
             return item
-    raise HTTPException(status_code=404, detail=f"Menu item with id {item_id} not found")    
-    
+    raise HTTPException(status_code=404, detail=f"Menu item with id {item_id} not found")
