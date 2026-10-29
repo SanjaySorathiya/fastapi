@@ -4,7 +4,7 @@ Enhancement backlog for the read-only menu API that serves the Barista Coffee, L
 
 ## 1. Bugs (fix first)
 
-- [ ] **Category name mismatch.** The `/menu` docstring says "coffee, snack or combo", but the data uses `snacks` and `combos`. `GET /menu?category=snack` returns 404 for a valid category.
+- [x] **Category name mismatch.** The `/menu` docstring says "coffee, snack or combo", but the data uses `snacks` and `combos`. `GET /menu?category=snack` returns 404 for a valid category.
   - Pick one set of names (plural, matching the data) and make the docs match.
   - Type the query parameter as `Literal["coffee", "snacks", "combos"]` or an `Enum` so FastAPI validates it and `/docs` lists the valid values.
 
@@ -17,8 +17,8 @@ There are no tests and no test dependencies yet.
 - [ ] `GET /` returns the welcome message.
 - [ ] `GET /menu` returns all 10 items and `count == 10`.
 - [ ] `GET /menu?category=coffee` returns only coffee items, and `count` matches the list length.
-- [ ] `GET /menu?category=COFFEE` works (the code lowercases the input).
-- [ ] `GET /menu?category=unknown` returns 404.
+- [ ] `GET /menu?category=COFFEE` returns 422 (the category is a case-sensitive `Literal`; uppercase is rejected).
+- [ ] `GET /menu?category=unknown` returns 422 (validation error from the `Literal`).
 - [ ] `GET /menu/{id}` returns the item.
 - [ ] `GET /menu/{id}` with an unknown id returns 404.
 - [ ] Data integrity: every id is unique, every category is in the allowed set, and every price is positive. This catches typos in `data.py` before they reach a kiosk.

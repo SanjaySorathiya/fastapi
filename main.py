@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Query, HTTPException
 from models import MenuItem, MenuResponse
 from data import menu_items
+from typing import Literal
 
 app = FastAPI(
     title="Barista Coffee Point menu API",
@@ -16,9 +17,9 @@ def root():
 # /menu?cateory=coffee
 
 @app.get("/menu", response_model=MenuResponse)
-def get_menu(category: str | None = Query(None, description="Filter by coffee, snack or combo")):
+def get_menu(category: Literal["coffee", "snacks", "combos"] | None = Query(None, description="Filter by coffee, snacks or combos")):
     if category:
-        filtered = [item for item in menu_items if item["category"] == category.lower()]
+        filtered = [item for item in menu_items if item["category"] == category]
         if not filtered:
             raise HTTPException(status_code=404, detail=f"No item found in category: {category}")
         items = [MenuItem.model_validate(item) for item in filtered]
