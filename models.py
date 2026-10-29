@@ -1,11 +1,15 @@
+from decimal import Decimal
+from typing import Literal
 from pydantic import BaseModel
+
+Category = Literal["coffee", "snacks", "combos"]
 
 
 class MenuItem(BaseModel):
     id: int
     name: str
-    category: str
-    price: float
+    category: Category
+    price: Decimal
     description: str
     available: bool
 
