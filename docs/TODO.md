@@ -45,7 +45,6 @@ There are no tests and no test dependencies yet.
 - [ ] **CORS.** If the mobile app runs as a web view or PWA, add `CORSMiddleware` with an explicit origin list.
 - [ ] **Health check.** Add `GET /health` for uptime monitors and kiosk status checks.
 - [ ] **Logging.** Add basic request logging.
-- [ ] **Docker.** Add a small `Dockerfile` (python-slim base, `uvicorn main:app --host 0.0.0.0`).
 - [ ] **CI.** Add a GitHub Actions workflow that installs requirements and runs `pytest` on every push and PR.
 - [ ] **Check `.gitignore`.** Confirm `venv/` is excluded before committing.
 
@@ -59,10 +58,11 @@ There are no tests and no test dependencies yet.
 
 ## 6. Longer term
 
-- [ ] **Move data out of code.** A JSON or YAML file lets the shop change the menu without a code change.
-- [ ] **Database and admin.** Later, a SQLite or Postgres table with an authenticated admin endpoint for edits.
-- [ ] **Separate write path.** Keep the public API read-only; put any admin writes in a separate, authenticated service.
-- [ ] **Richer item data.** Add image URLs and allergen information for kiosk displays.
+- [x] **Move data out of code.** A JSON or YAML file lets the shop change the menu without a code change.
+  - Menu now lives in `menu.json`; `data.py` loads and validates it with `MenuItem` at startup.
+  - Prices are stored as strings (`"30.00"`) so they parse to `Decimal` without float rounding.
+- [x] **Separate write path.** Keep the public API read-only; put any admin writes in a separate, authenticated service.
+  - The API exposes only `GET` routes; `POST`/`PUT`/`PATCH`/`DELETE` on `/menu` return 405. No admin write service is built yet; it stays out of this codebase until needed.
 
 ## Suggested order
 
