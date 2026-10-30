@@ -40,13 +40,19 @@ There are no tests and no test dependencies yet.
 
 ## 4. Operations
 
-- [ ] **HTTP caching.** The menu changes rarely. Send `Cache-Control: max-age=60` and an `ETag` to cut server load and speed up kiosks.
-- [ ] **Pin dependencies.** `fastapi` and `uvicorn[standard]` are unpinned in `requirements.txt`. Generate a lock file (`pip freeze`, `uv`, or `pip-tools`) for reproducible builds.
-- [ ] **CORS.** If the mobile app runs as a web view or PWA, add `CORSMiddleware` with an explicit origin list.
-- [ ] **Health check.** Add `GET /health` for uptime monitors and kiosk status checks.
-- [ ] **Logging.** Add basic request logging.
-- [ ] **CI.** Add a GitHub Actions workflow that installs requirements and runs `pytest` on every push and PR.
-- [ ] **Check `.gitignore`.** Confirm `venv/` is excluded before committing.
+- [x] **HTTP caching.** The menu changes rarely. Send `Cache-Control: max-age=60` and an `ETag` to cut server load and speed up kiosks.
+  - `/menu` and `/menu/{id}` send an `ETag` (SHA-256 of the body) and `Cache-Control: max-age=60`; a matching `If-None-Match` gets `304`. Errors are not cached.
+- [x] **Pin dependencies.** `fastapi` and `uvicorn[standard]` are unpinned in `requirements.txt`. Generate a lock file (`pip freeze`, `uv`, or `pip-tools`) for reproducible builds.
+  - `requirements.txt` pins every package (a full `pip freeze`) and is saved as UTF-8.
+- [x] **CORS.** If the mobile app runs as a web view or PWA, add `CORSMiddleware` with an explicit origin list.
+  - Origins come from the `CORS_ALLOWED_ORIGINS` env var (comma-separated). Empty by default, so no cross-origin access until set.
+- [x] **Health check.** Add `GET /health` for uptime monitors and kiosk status checks.
+- [x] **Logging.** Add basic request logging.
+  - Each request logs method, path, status and duration (`barista_menu` logger).
+- [x] **CI.** Add a GitHub Actions workflow that installs requirements and runs `pytest` on every push and PR.
+  - `.github/workflows/ci.yml` is added. It stays red until the Tests section adds `pytest`/`httpx` and the test files.
+- [x] **Check `.gitignore`.** Confirm `venv/` is excluded before committing.
+  - `venv/` and `.venv313/` are both ignored.
 
 ## 5. Documentation
 
