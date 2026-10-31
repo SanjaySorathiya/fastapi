@@ -20,5 +20,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements-dev.txt
 
-      - name: Run tests
-        run: pytest
+      - name: Lint
+        run: ruff check .
+
+      - name: Format check
+        run: ruff format --check .
+
+      - name: Run tests with coverage
+        run: pytest --cov=main --cov=models --cov=data --cov-report=term-missing --cov-fail-under=90
