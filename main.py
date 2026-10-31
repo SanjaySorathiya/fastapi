@@ -24,7 +24,7 @@ CACHE_CONTROL = "max-age=60"
 
 app = FastAPI(
     title="Barista Coffee Point menu API",
-    description="Read only menu API for Kiosk displays and mobile app"
+    description="Read only menu API for Kiosk displays and mobile app",
 )
 
 # Comma-separated origins, set via the CORS_ALLOWED_ORIGINS env var.

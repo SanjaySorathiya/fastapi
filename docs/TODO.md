@@ -10,20 +10,23 @@ Enhancement backlog for the read-only menu API that serves the Barista Coffee, L
 
 ## 2. Tests
 
-There are no tests and no test dependencies yet.
+The suite follows [TESTING_GUIDELINES.md](TESTING_GUIDELINES.md): 62 tests in `tests/`, 100% line coverage of `main.py`, `models.py` and `data.py`.
 
-- [ ] Add `pytest` and `httpx` (required by FastAPI's `TestClient`) to the dev requirements.
-- [ ] Create a `tests/` folder with a `conftest.py` that builds the `TestClient`.
-- [ ] `GET /` returns the welcome message.
-- [ ] `GET /menu` returns all 10 items and `count == 10`.
-- [ ] `GET /menu?category=coffee` returns only coffee items, and `count` matches the list length.
-- [ ] `GET /menu?category=COFFEE` returns 422 (the category is a case-sensitive `Literal`; uppercase is rejected).
-- [ ] `GET /menu?category=unknown` returns 422 (validation error from the `Literal`).
-- [ ] `GET /menu/{id}` returns the item.
-- [ ] `GET /menu/{id}` with an unknown id returns 404.
-- [ ] Data integrity: every id is unique, every category is in the allowed set, and every price is positive. This catches typos in `data.py` before they reach a kiosk.
-- [ ] `/openapi.json` includes the `category` parameter.
-- [ ] Run the suite with `pytest`.
+- [x] Add `pytest` and `httpx` (required by FastAPI's `TestClient`) to the dev requirements. `pytest-cov` and `ruff` were added too, all pinned.
+- [x] Create a `tests/` folder with a `conftest.py` that builds the `TestClient`. `pytest.ini` sets `testpaths` and `pythonpath`.
+- [x] `GET /` returns the welcome message.
+- [x] `GET /menu` returns all 10 items and `count == 10`.
+- [x] `GET /menu?category=coffee` returns only coffee items, and `count` matches the list length.
+- [x] `GET /menu?category=COFFEE` returns 422 (the category is a case-sensitive `Literal`; uppercase is rejected).
+- [x] `GET /menu?category=unknown` returns 422 (validation error from the `Literal`).
+- [x] `GET /menu/{id}` returns the item.
+- [x] `GET /menu/{id}` with an unknown id returns 404.
+- [x] Data integrity: every id is unique, every category is in the allowed set, and every price is positive. This catches typos in `menu.json` before they reach a kiosk.
+- [x] `/openapi.json` includes the `category` parameter.
+- [x] Run the suite with `pytest`.
+- [x] Also covered: `available_only`, the error envelope, ETag/304 caching, CORS, 405 on write methods, and the Pydantic models.
+- [x] Remove the dummy `test_hello.py`.
+- [ ] Optional: replace the `httpx` test client with `httpx2`. Starlette prints a deprecation warning during the test run.
 
 ## 3. Code quality
 
@@ -50,7 +53,8 @@ There are no tests and no test dependencies yet.
 - [x] **Logging.** Add basic request logging.
   - Each request logs method, path, status and duration (`barista_menu` logger).
 - [x] **CI.** Add a GitHub Actions workflow that installs requirements and runs `pytest` on every push and PR.
-  - `.github/workflows/ci.yml` is added. It stays red until the Tests section adds `pytest`/`httpx` and the test files.
+  - `.github/workflows/ci.yml` installs `requirements-dev.txt`, runs `ruff check` and `ruff format --check`, then runs `pytest` with a 90% coverage gate. See [CI.md](CI.md).
+  - [ ] Still to do in GitHub settings: add a branch protection rule on `main` that requires the `test` check to pass.
 - [x] **Check `.gitignore`.** Confirm `venv/` is excluded before committing.
   - `venv/` and `.venv313/` are both ignored.
 
