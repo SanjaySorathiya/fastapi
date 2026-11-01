@@ -60,11 +60,22 @@ The suite follows [TESTING_GUIDELINES.md](TESTING_GUIDELINES.md): 62 tests in `t
 
 ## 5. Documentation
 
-- [ ] Expand `README.md` (currently one sentence) with:
-  - Setup: `python -m venv venv`, install requirements, `uvicorn main:app --reload`.
-  - Example requests for each endpoint.
-  - The `/docs` URL for interactive API docs.
-  - How to run the tests.
+- [x] **Expand `README.md`** (was one sentence). Covers:
+  - [x] Setup: `python -m venv venv`, install requirements, `uvicorn main:app --reload` (PowerShell and bash commands).
+  - [x] Example requests for each endpoint, with the real responses. Each example was checked against the running app.
+  - [x] The `/docs` URL for interactive API docs (plus `/redoc` and `/openapi.json`).
+  - [x] How to run the tests (`pytest`, with the CI coverage command).
+- [x] **Standard FastAPI project sections** added to the README:
+  - [x] Overview and features list.
+  - [x] Project structure tree.
+  - [x] Requirements (Python 3.12, matching CI).
+  - [x] Endpoint table and query parameter reference.
+  - [x] Error response format and status codes.
+  - [x] Configuration table for `CORS_ALLOWED_ORIGINS`.
+  - [x] "Changing the menu" guide: the `menu.json` fields and validation rules.
+  - [x] Linting and formatting commands (`ruff check`, `ruff format --check`).
+  - [x] Links to `docs/CI.md`, `docs/TESTING_GUIDELINES.md` and this file.
+- [ ] Optional: add a `docs/API.md` or an OpenAPI export for clients that need a static schema. The live `/openapi.json` already covers this.
 
 ## 6. Longer term
 
